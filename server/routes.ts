@@ -1,10 +1,11 @@
-import type { Express } from "express";
+import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
 import { storage } from "./storage";
 import { setupWebSocketServer, broadcastMessage } from "./websocket";
 import { insertVoteSchema } from "@shared/schema";
 import { z } from "zod";
+import * as XLSX from 'xlsx';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
@@ -141,6 +142,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ageDistribution: ageGroups,
         professionDistribution: professionsArray
       });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  // Download votes as XLSX
+  app.get("/api/votes/download", async (req, res, next) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Não autenticado" });
+      }
+      
+      if (req.user?.role !== 'professor') {
+        return res.status(403).json({ message: "Acesso não autorizado" });
+      }
+      
+      const allVotes = await storage.getVotes();
+      
+      // Prepare workbook and worksheet
+      const workbook = XLSX.utils.book_new();
+      
+      // Transform data for Excel export (format the dates and remove unnecessary fields)
+      const votesForExport = allVotes.map(vote => ({
+        ID: vote.id,
+        'Tipo de Voto': vote.vote_type === 'favor' ? 'A Favor' : 'Contra',
+        'Nome do Entrevistador': vote.interviewer_name,
+        'Nome do Entrevistado': vote.interviewee_name,
+        'E-mail do Entrevistado': vote.interviewee_email,
+        'Idade': vote.age,
+        'Profissão': vote.profession,
+        'Exemplo de Caso': vote.case_example || '',
+        'Data de Criação': new Date(vote.created_at).toLocaleString('pt-BR')
+      }));
+      
+      // Create worksheet from votes data
+      const worksheet = XLSX.utils.json_to_sheet(votesForExport);
+      
+      // Add worksheet to workbook
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Votos");
+      
+      // Generate buffer
+      const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+      
+      // Set headers for file download
+      res.setHeader('Content-Disposition', 'attachment; filename=votos.xlsx');
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      
+      // Send the file
+      res.send(excelBuffer);
     } catch (error) {
       next(error);
     }
