@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import byodCompaniesImage from "../assets/byod-companies.png";
 
 export default function LandingPage() {
   return (
@@ -97,6 +98,15 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <h3 className="text-3xl font-bold text-primary mb-12 text-center">BYOD no Brasil</h3>
           
+          {/* Display the image with companies listing */}
+          <div className="flex justify-center mb-8">
+            <img 
+              src={byodCompaniesImage} 
+              alt="Empresas que adotam e não adotam BYOD"
+              className="w-full max-w-3xl shadow-lg rounded-lg"
+            />
+          </div>
+          
           <div className="grid md:grid-cols-2 gap-12">
             {/* Companies that use BYOD */}
             <div className="bg-white p-8 rounded-lg shadow-md">
@@ -109,11 +119,9 @@ export default function LandingPage() {
               
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <img 
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Itau_logo.svg/1280px-Itau_logo.svg.png" 
-                    alt="Logo Itaú" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-primary font-bold">Itaú</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Itaú Unibanco</h5>
                     <p className="text-gray-600">Implementou políticas BYOD para aumentar a flexibilidade dos colaboradores e reduzir custos de TI.</p>
@@ -121,11 +129,9 @@ export default function LandingPage() {
                 </div>
                 
                 <div className="flex items-start">
-                  <img 
-                    src="https://logodownload.org/wp-content/uploads/2014/07/petrobras-logo-1-1.png" 
-                    alt="Logo Petrobras" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-primary font-bold">Petrobras</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Petrobras</h5>
                     <p className="text-gray-600">Utiliza BYOD para equipes de campo, permitindo maior mobilidade e acesso aos sistemas em tempo real.</p>
@@ -133,11 +139,9 @@ export default function LandingPage() {
                 </div>
                 
                 <div className="flex items-start">
-                  <img 
-                    src="https://logodownload.org/wp-content/uploads/2014/04/vale-logo-0.png" 
-                    alt="Logo Vale" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-primary font-bold">Vale</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Vale</h5>
                     <p className="text-gray-600">Adotou BYOD para melhorar produtividade em escritórios e operações remotas com forte investimento em segurança.</p>
@@ -145,11 +149,9 @@ export default function LandingPage() {
                 </div>
                 
                 <div className="flex items-start">
-                  <img 
-                    src="https://logosmarcas.net/wp-content/uploads/2021/03/Natura-Logo.png" 
-                    alt="Logo Natura" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-primary font-bold">Natura</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Natura</h5>
                     <p className="text-gray-600">Implementou BYOD para consultoras e equipe administrativa, permitindo maior flexibilidade nas vendas.</p>
@@ -157,11 +159,9 @@ export default function LandingPage() {
                 </div>
                 
                 <div className="flex items-start">
-                  <img 
-                    src="https://logodownload.org/wp-content/uploads/2018/09/nubank-logo-0.png" 
-                    alt="Logo Nubank" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-primary font-bold">Nubank</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Nubank</h5>
                     <p className="text-gray-600">Como banco digital, adota BYOD como parte da cultura de autonomia e está na vanguarda dessa prática.</p>
@@ -181,11 +181,9 @@ export default function LandingPage() {
               
               <div className="space-y-6">
                 <div className="flex items-start">
-                  <img 
-                    src="https://logodownload.org/wp-content/uploads/2014/02/banco-do-brasil-logo-0.png" 
-                    alt="Logo Banco do Brasil" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-red-600 font-bold">BB</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Banco do Brasil</h5>
                     <p className="text-gray-600">Devido a rigorosas políticas de segurança, mantém controle total sobre os dispositivos usados nas operações.</p>
@@ -193,11 +191,9 @@ export default function LandingPage() {
                 </div>
                 
                 <div className="flex items-start">
-                  <img 
-                    src="https://logodownload.org/wp-content/uploads/2014/09/caixa-logo-2.png" 
-                    alt="Logo Caixa Econômica Federal" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-red-600 font-bold">Caixa</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Caixa Econômica Federal</h5>
                     <p className="text-gray-600">Como instituição pública, mantém controle restrito sobre equipamentos para garantir conformidade e segurança.</p>
@@ -205,11 +201,9 @@ export default function LandingPage() {
                 </div>
                 
                 <div className="flex items-start">
-                  <img 
-                    src="https://logodownload.org/wp-content/uploads/2014/05/bradesco-logo-0.png" 
-                    alt="Logo Bradesco" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-red-600 font-bold">Bradesco</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Bradesco</h5>
                     <p className="text-gray-600">Restringe o uso de dispositivos pessoais em ambientes corporativos devido a preocupações com segurança bancária.</p>
@@ -217,11 +211,9 @@ export default function LandingPage() {
                 </div>
                 
                 <div className="flex items-start">
-                  <img 
-                    src="https://logodownload.org/wp-content/uploads/2014/05/embraer-logo-4.png" 
-                    alt="Logo Embraer" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-red-600 font-bold">Embraer</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Embraer</h5>
                     <p className="text-gray-600">Por questões de segurança industrial e propriedade intelectual, controla rigidamente os dispositivos utilizados.</p>
@@ -229,11 +221,9 @@ export default function LandingPage() {
                 </div>
                 
                 <div className="flex items-start">
-                  <img 
-                    src="https://logodownload.org/wp-content/uploads/2014/07/correios-logo-5.png" 
-                    alt="Logo Correios" 
-                    className="h-12 w-auto mr-4 object-contain"
-                  />
+                  <div className="w-16 h-16 bg-gray-100 flex items-center justify-center rounded mr-4">
+                    <span className="text-red-600 font-bold">Correios</span>
+                  </div>
                   <div>
                     <h5 className="text-lg font-semibold">Correios</h5>
                     <p className="text-gray-600">Como empresa pública, mantém política de uso exclusivo de equipamentos corporativos para fins de segurança.</p>
