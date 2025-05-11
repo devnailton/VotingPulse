@@ -31,6 +31,15 @@ export default function VotesTable({
   const [ageFilter, setAgeFilter] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<string>(voteType || "all");
   
+  // Fetch professions for the filter
+  const { data: professions = [] } = useQuery<string[]>({
+    queryKey: ["/api/professions"],
+    queryFn: () => fetch("/api/professions").then(res => {
+      if (!res.ok) throw new Error("Failed to fetch professions");
+      return res.json();
+    })
+  });
+  
   const buttonColor = voteType === "favor" 
     ? "bg-[#4caf50]/10 hover:bg-[#4caf50]/20 text-[#4caf50]" 
     : "bg-[#f44336]/10 hover:bg-[#f44336]/20 text-[#f44336]";
@@ -106,11 +115,11 @@ export default function VotesTable({
                   onChange={(e) => setProfessionFilter(e.target.value)}
                 >
                   <option value="all">Todas as profissões</option>
-                  <option value="estudante">Estudante</option>
-                  <option value="professor">Professor</option>
-                  <option value="engenheiro">Engenheiro</option>
-                  <option value="medico">Médico</option>
-                  <option value="outros">Outros</option>
+                  {professions.map(profession => (
+                    <option key={profession} value={profession}>
+                      {profession}
+                    </option>
+                  ))}
                 </select>
 
                 <select

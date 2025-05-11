@@ -207,10 +207,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const allVotes = await storage.getVotes();
       
       // Extract unique professions
-      const uniqueProfessions = [...new Set(allVotes.map(vote => vote.profession))];
+      const professionMap = new Map();
+      allVotes.forEach(vote => {
+        professionMap.set(vote.profession, true);
+      });
       
-      // Sort professions alphabetically
-      uniqueProfessions.sort();
+      // Convert to array and sort alphabetically
+      const uniqueProfessions = Array.from(professionMap.keys()).sort();
       
       res.json(uniqueProfessions);
     } catch (error) {
