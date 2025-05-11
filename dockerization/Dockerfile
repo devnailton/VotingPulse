@@ -19,4 +19,4 @@ EXPOSE 5000
 ENV NODE_ENV=production
 
 # Comando para iniciar a aplicação
-CMD ["npm", "run", "start"]
+CMD ["node", "dist/index.js"]
