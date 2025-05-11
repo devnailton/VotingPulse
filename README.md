@@ -2,15 +2,15 @@
 Esta abordagem envolve usar este manual, o GUIA_INSTALACAO.MD como base, mas reutilizando e corrigindo seu Dockerfile existente. Isso simplifica a estrutura de pastas e garante que todas as configurações estejam explícitas.
 
 Mova seu Dockerfile existente:
-No seu servidor VPS, depois de clonar/copiar seu projeto para ~/byod-voting-system (ou o nome que este manual, o GUIA_INSTALACAO.MD sugere, como ~/byod-voting-system), mova o arquivo Dockerfile de dentro da pasta dockerization para a pasta raiz do projeto.
-Por exemplo, se seu projeto está em ~/byod-voting-system, mova ~/byod-voting-system/dockerization/Dockerfile para ~/byod-voting-system/Dockerfile.
+No seu servidor VPS, depois de clonar/copiar seu projeto para /byod-voting-system (ou o nome que este manual, o GUIA_INSTALACAO.MD sugere, como /byod-voting-system), mova o arquivo Dockerfile de dentro da pasta dockerization para a pasta raiz do projeto.
+Por exemplo, se seu projeto está em /byod-voting-system, mova /byod-voting-system/dockerization/Dockerfile para /byod-voting-system/Dockerfile.
 Você pode ignorar ou remover o arquivo docker-compose.yml que estava na pasta dockerization, pois vamos criar um novo baseado neste manual, o GUIA_INSTALACAO.MD.
 Edite o Dockerfile (que agora está na raiz do projeto):
-Abra o arquivo ~/byod-voting-system/Dockerfile com nano Dockerfile.
+Abra o arquivo /byod-voting-system/Dockerfile com nano Dockerfile.
 Descomente a linha de build: Altere # RUN npm run build para RUN npm run build.
 (Opcional, mas recomendado para consistência com Replit): Seu .replit usa nodejs-20. O Dockerfile usa FROM node:18-alpine. Se seu projeto funciona bem com Node 20 e você quer manter essa versão, altere a primeira linha do Dockerfile para FROM node:20-alpine. Caso contrário, node:18-alpine é uma versão LTS (Long Term Support) estável.
 Siga este manual, o GUIA_INSTALACAO.MD para o restante:
-Criar docker-compose.yml: Use o Passo 3: Preparar os arquivos do projeto, subitem 1. Criar o arquivo docker-compose.yml deste manual, o GUIA_INSTALACAO.MD. Crie este arquivo na raiz do projeto (~/byod-voting-system/docker-compose.yml) com o conteúdo fornecido no guia. Este docker-compose.yml é projetado para funcionar com o Dockerfile na mesma pasta.
+Criar docker-compose.yml: Use o Passo 3: Preparar os arquivos do projeto, subitem 1. Criar o arquivo docker-compose.yml deste manual, o GUIA_INSTALACAO.MD. Crie este arquivo na raiz do projeto (/byod-voting-system/docker-compose.yml) com o conteúdo fornecido no guia. Este docker-compose.yml é projetado para funcionar com o Dockerfile na mesma pasta.
 Criar .env: Siga o subitem 2. Criar o arquivo .env deste manual, o GUIA_INSTALACAO.MD na raiz do projeto.
 Criar .dockerignore: Siga o subitem 5. Criar o arquivo .dockerignore deste manual, o GUIA_INSTALACAO.MD na raiz do projeto.
 Verificar package.json: Certifique-se de que os scripts start e build no seu package.json estão como este manual, o GUIA_INSTALACAO.MD sugere (o que parece já ser o caso, com base no seu package.json e .replit).
