@@ -14,7 +14,7 @@ Criar docker-compose.yml: Use o Passo 3: Preparar os arquivos do projeto, subite
 Criar .env: Siga o subitem 2. Criar o arquivo .env deste manual, o GUIA_INSTALACAO.MD na raiz do projeto.
 Criar .dockerignore: Siga o subitem 5. Criar o arquivo .dockerignore deste manual, o GUIA_INSTALACAO.MD na raiz do projeto.
 Verificar package.json: Certifique-se de que os scripts start e build no seu package.json estão como este manual, o GUIA_INSTALACAO.MD sugere (o que parece já ser o caso, com base no seu package.json e .replit).
-Continue com os demais passos deste manual, o GUIA_INSTALACAO.MD (Passo 4: Construir e executar os contêineres, etc.). Os comandos docker-compose devem ser executados a partir da raiz do projeto (~/byod-voting-system).
+Continue com os demais passos deste manual, o GUIA_INSTALACAO.MD (Passo 4: Construir e executar os contêineres, etc.). Os comandos docker-compose devem ser executados a partir da raiz do projeto (/byod-voting-system).
 
 
 # Guia de Instalação do Sistema de Votação BYOD
@@ -93,8 +93,8 @@ sudo usermod -aG docker $USER
 ### Criar uma pasta para o projeto:
 
 ```bash
-mkdir -p ~/byod-voting-system
-cd ~/byod-voting-system
+mkdir -p /byod-voting-system
+cd /byod-voting-system
 ```
 
 ### Criar os arquivos necessários
@@ -200,13 +200,13 @@ Agora você precisa fazer upload dos arquivos do projeto para o seu servidor. Vo
 
 ```bash
 # Executar na sua máquina local, não no servidor
-scp arquivos-do-projeto.zip usuario@ip-do-seu-servidor:~/byod-voting-system/
+scp arquivos-do-projeto.zip usuario@ip-do-seu-servidor:/byod-voting-system/
 ```
 
 Depois, no servidor:
 
 ```bash
-cd ~/byod-voting-system
+cd /byod-voting-system
 unzip arquivos-do-projeto.zip
 ```
 
