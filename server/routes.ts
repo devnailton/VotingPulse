@@ -196,5 +196,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get professions for filter
+  app.get("/api/professions", async (req, res, next) => {
+    try {
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Não autenticado" });
+      }
+      
+      // Get all actual professions from votes
+      const allVotes = await storage.getVotes();
+      
+      // Extract unique professions
+      const uniqueProfessions = [...new Set(allVotes.map(vote => vote.profession))];
+      
+      // Sort professions alphabetically
+      uniqueProfessions.sort();
+      
+      res.json(uniqueProfessions);
+    } catch (error) {
+      next(error);
+    }
+  });
+
   return httpServer;
 }

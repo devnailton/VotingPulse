@@ -11,15 +11,17 @@ import AuthPage from "@/pages/auth-page";
 import ProfessorDashboard from "@/pages/professor-dashboard";
 import FavorPanel from "@/pages/favor-panel";
 import ContraPanel from "@/pages/contra-panel";
+import LandingPage from "@/pages/landing-page";
 
 function Router() {
   return (
     <Switch>
+      <Route path="/" component={LandingPage} />
       <ProtectedRoute 
-        path="/" 
+        path="/dashboard" 
         component={() => {
           // Redirect based on user role
-          return <Route path="/">
+          return <Route path="/dashboard">
             <Redirect />
           </Route>;
         }} 
