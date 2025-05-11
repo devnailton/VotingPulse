@@ -5,8 +5,8 @@ import * as schema from "@shared/schema";
 
 neonConfig.webSocketConstructor = ws;
 
-// Use provided connection string from user or fallback to Replit provided database
-const connectionString = "postgresql://neondb_owner:npg_FSq2wvnb7mAl@ep-delicate-dawn-a4tiibhq-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require" || process.env.DATABASE_URL;
+// Use the Neon database connection string
+const connectionString = "postgresql://neondb_owner:npg_FSq2wvnb7mAl@ep-delicate-dawn-a4tiibhq-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require";
 
 if (!connectionString) {
   throw new Error(

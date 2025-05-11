@@ -16,6 +16,7 @@ export interface IStorage {
   getVotesByProfession(profession: string): Promise<Vote[]>;
   getVotesByAgeRange(min: number, max: number): Promise<Vote[]>;
   getFilteredVotes(filters: { voteType?: string; profession?: string; ageRange?: string }): Promise<Vote[]>;
+  getVoteByEmail(email: string): Promise<Vote | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -39,7 +40,18 @@ export class DatabaseStorage implements IStorage {
   }
 
   // Vote operations
+  async getVoteByEmail(email: string): Promise<Vote | undefined> {
+    const [vote] = await db.select().from(votes).where(eq(votes.interviewee_email, email));
+    return vote;
+  }
+
   async createVote(insertVote: InsertVote): Promise<Vote> {
+    // Check if a vote with this email already exists
+    const existingVote = await this.getVoteByEmail(insertVote.interviewee_email);
+    if (existingVote) {
+      throw new Error("Já existe um voto registrado com este e-mail");
+    }
+
     const [vote] = await db
       .insert(votes)
       .values(insertVote)
@@ -60,20 +72,28 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getVotesByAgeRange(min: number, max: number): Promise<Vote[]> {
-    return db
-      .select()
-      .from(votes)
-      .where(and(
-        min ? eq(votes.age >= min, true) : undefined,
-        max ? eq(votes.age <= max, true) : undefined
-      ));
+    let conditions = [];
+    
+    if (min) {
+      conditions.push(eq(votes.age, min));
+    }
+    
+    if (max) {
+      conditions.push(eq(votes.age, max));
+    }
+    
+    if (conditions.length > 0) {
+      return db.select().from(votes).where(and(...conditions));
+    } else {
+      return db.select().from(votes);
+    }
   }
 
   async getFilteredVotes(filters: { voteType?: string; profession?: string; ageRange?: string }): Promise<Vote[]> {
     let query = db.select().from(votes);
     
     if (filters.voteType && filters.voteType !== 'all') {
-      query = query.where(eq(votes.vote_type, filters.voteType));
+      query = query.where(eq(votes.vote_type, filters.voteType as "favor" | "contra"));
     }
     
     if (filters.profession && filters.profession !== 'all') {
@@ -83,12 +103,16 @@ export class DatabaseStorage implements IStorage {
     if (filters.ageRange && filters.ageRange !== 'all') {
       const [min, max] = filters.ageRange.split('-').map(Number);
       if (!isNaN(min) && !isNaN(max)) {
-        query = query.where(and(
-          eq(votes.age >= min, true),
-          eq(votes.age <= max, true)
-        ));
+        // Filter votes where age >= min and age <= max
+        query = query.where(
+          and(
+            min ? eq(votes.age, min) : undefined,
+            max ? eq(votes.age, max) : undefined
+          )
+        );
       } else if (filters.ageRange === '51+') {
-        query = query.where(eq(votes.age >= 51, true));
+        // Filter votes where age >= 51
+        query = query.where(eq(votes.age, 51));
       }
     }
     

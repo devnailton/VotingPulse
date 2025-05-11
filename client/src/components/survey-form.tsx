@@ -76,10 +76,11 @@ export default function SurveyForm({ voteType }: SurveyFormProps) {
         vote_type: voteType
       });
     },
-    onError: (error) => {
+    onError: (error: any) => {
+      const errorMessage = error.response?.data?.message || error.message;
       toast({
         title: "Erro ao registrar voto",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive"
       });
     }
@@ -186,6 +187,7 @@ export default function SurveyForm({ voteType }: SurveyFormProps) {
                       <Textarea 
                         rows={3} 
                         {...field} 
+                        value={field.value || ''}
                         className={`focus-visible:ring-${voteType === "favor" ? "[#4caf50]" : "[#f44336]"}`}
                       />
                     </FormControl>

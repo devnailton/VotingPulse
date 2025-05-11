@@ -26,16 +26,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Validate request body
       const voteData = insertVoteSchema.parse(req.body);
       
-      // Create vote in database
-      const vote = await storage.createVote(voteData);
-      
-      // Broadcast new vote to all connected clients
-      broadcastMessage(wss, {
-        type: 'new_vote',
-        data: vote
-      });
-      
-      res.status(201).json(vote);
+      try {
+        // Create vote in database
+        const vote = await storage.createVote(voteData);
+        
+        // Broadcast new vote to all connected clients
+        broadcastMessage(wss, {
+          type: 'new_vote',
+          data: vote
+        });
+        
+        res.status(201).json(vote);
+      } catch (storageError: any) {
+        // Handle specific error for duplicate email
+        if (storageError.message === "Já existe um voto registrado com este e-mail") {
+          return res.status(400).json({ 
+            message: storageError.message
+          });
+        }
+        throw storageError;
+      }
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ 
